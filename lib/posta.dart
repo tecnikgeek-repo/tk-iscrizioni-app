@@ -36,6 +36,18 @@ Future<ImapClient> collega(String host, int port, String utente, String segreto,
   } catch (e) {
     throw Exception('non riesco a collegarmi a «$host»');
   }
+  if (port == 143) {
+    // sulla 143 la connessione parte in chiaro: si protegge PRIMA di mandare password o token (come tk-iscrizioni
+    // per computer). Senza STARTTLS non si va avanti: la password viaggerebbe leggibile.
+    try {
+      await client.startTls();
+    } catch (_) {
+      try {
+        await client.disconnect();
+      } catch (_) {}
+      throw Exception('«$host» non protegge la connessione sulla porta 143: usa la 993');
+    }
+  }
   try {
     if (oauth) {
       await client.authenticateWithOAuth2(utente, segreto);
