@@ -170,7 +170,7 @@ class _SchermataHomeState extends State<SchermataHome> {
           Testata(
             sottotitolo: 'A cosa sei iscritto con la tua email',
             azioni: [
-              if (_servizi.isNotEmpty) AzioneTk(Icons.ios_share, 'Esporta per Excel', _esporta),
+              if (_servizi.isNotEmpty) AzioneTk(Icons.ios_share, 'Esporta foglio di calcolo', _esporta),
               AzioneTk(Icons.info, 'Informazioni',
                   () => apriInformazioni(context,
                       righe: _righeInfo,
@@ -216,7 +216,7 @@ class _SchermataHomeState extends State<SchermataHome> {
                   style: TextStyle(color: grigio500, fontSize: 14, height: 1.4)),
               const SizedBox(height: 16),
               for (final (n, t, d) in [
-                ('01', 'Aggiungi la casella', 'Gmail, Aruba, Libero, Virgilio, Yahoo, iCloud…'),
+                ('01', 'Aggiungi la casella', 'Funziona con le caselle email più diffuse'),
                 ('02', 'Analizza', 'Solo le intestazioni, sul tuo telefono'),
                 ('03', 'Fai pulizia', 'Disiscriviti o cancella gli account che non usi'),
               ])

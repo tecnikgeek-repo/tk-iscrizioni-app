@@ -88,8 +88,8 @@ class _SchermataServizioState extends State<SchermataServizio> {
     if (https.isNotEmpty && s.unClic) {
       if (!await _chiedi(
           titolo,
-          'Chiedo al mittente di toglierti dalla sua lista con la disiscrizione in un clic, lo standard che usano '
-          'Gmail e Outlook. Il tuo account, se c\'è, non viene cancellato.',
+          'Chiedo al mittente di toglierti dalla sua lista con la disiscrizione in un clic, lo standard delle '
+          'caselle email più diffuse. Il tuo account, se c\'è, non viene cancellato.',
           https,
           'Disiscrivimi')) {
         return;
