@@ -48,9 +48,9 @@ const righeBenvenuto = [
   '**Legge solo le intestazioni** (mittente, oggetto, data, link di disiscrizione), **in sola lettura**: nessuna '
       'email viene aperta, segnata come letta, spostata o cancellata.',
   "**Sul telefono** restano l'archivio di mittenti, oggetti e date delle email lette e le password delle caselle, "
-      'nella cassaforte del telefono (Keystore su Android, Portachiavi su iPhone). Togliendo una casella si '
+      'nella cassaforte del telefono. Togliendo una casella si '
       'cancellano tutte e due.',
-  "**In rete:** il tuo fornitore di posta; Dropbox per il controllo degli aggiornamenti (Android); "
+  "**In rete:** il tuo fornitore di posta; ${tkPlay ? '' : 'Dropbox per il controllo degli aggiornamenti; '}"
       'pietrodefilippis.it per le statistiche, solo col sì qui sotto; i siti dei mittenti solo quando premi '
       '«Disiscriviti» o «Apri il sito». Email e password non passano da altri server.',
 ];
