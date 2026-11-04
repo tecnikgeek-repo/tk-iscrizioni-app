@@ -110,7 +110,7 @@ class _SchermataServizioState extends State<SchermataServizio> {
         if (!mounted) return;
         // la pagina si apre solo se l'utente lo chiede, mai da sola
         if (await _chiedi('Disiscrizione non riuscita',
-            'Il mittente ha risposto con un errore ($e). Vuoi aprire la sua pagina di disiscrizione nel browser?',
+            'Il mittente ha risposto con un errore. Vuoi aprire la sua pagina di disiscrizione nel browser?',
             https, 'Apri la pagina')) {
           await launchUrl(Uri.parse(https), mode: LaunchMode.externalApplication);
         }

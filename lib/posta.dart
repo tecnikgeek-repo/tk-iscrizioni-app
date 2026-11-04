@@ -1,4 +1,5 @@
 // Lettura della casella via IMAP: solo le intestazioni, in sola lettura (EXAMINE + BODY.PEEK).
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 import 'package:enough_mail/enough_mail.dart';
@@ -28,13 +29,13 @@ Future<ImapClient> collega(String host, int port, String utente, String segreto,
   try {
     await client.connectToServer(host, port, isSecure: port != 143, timeout: const Duration(seconds: 30));
   } on SocketException catch (e) {
-    throw Exception(e.osError?.errorCode == 7 || e.message.contains('host')
+    throw e.osError?.errorCode == 7 || e.message.contains('host')
         ? 'il server «$host» non esiste: controlla il nome'
-        : 'non riesco a collegarmi a «$host»: ${e.message}');
+        : 'non riesco a collegarmi a «$host»: controlla la connessione';
   } on HandshakeException {
-    throw Exception('connessione sicura non riuscita con «$host»');
+    throw 'connessione sicura non riuscita con «$host»';
   } catch (e) {
-    throw Exception('non riesco a collegarmi a «$host»');
+    throw 'non riesco a collegarmi a «$host»';
   }
   if (port == 143) {
     // sulla 143 la connessione parte in chiaro: si protegge PRIMA di mandare password o token (come tk-iscrizioni
@@ -45,7 +46,7 @@ Future<ImapClient> collega(String host, int port, String utente, String segreto,
       try {
         await client.disconnect();
       } catch (_) {}
-      throw Exception('«$host» non protegge la connessione sulla porta 143: usa la 993');
+      throw '«$host» non protegge la connessione sulla porta 143: usa la 993';
     }
   }
   try {
@@ -58,9 +59,9 @@ Future<ImapClient> collega(String host, int port, String utente, String segreto,
     try {
       await client.disconnect();
     } catch (_) {}
-    var m = '$e'.replaceAll(RegExp(r'^.*?(NO|BAD)\s+'), '').replaceAll(RegExp(r'\[[A-Z-]+\]\s*'), '').trim();
-    if (m.isEmpty || m.length > 160) m = 'credenziali non valide';
-    throw AccessoNegato(m);
+    // il testo del server è tecnico e spesso in inglese: resta nel registro
+    debugPrint('Accesso rifiutato da $host: $e');
+    throw AccessoNegato('credenziali non valide');
   }
   return client;
 }

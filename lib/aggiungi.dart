@@ -88,7 +88,8 @@ class _SchermataAggiungiState extends State<SchermataAggiungi> {
       await archivio.aggiungiCasella(e, _fornitore.chiave, host, porta, 'password');
       if (mounted) Navigator.of(context).pop(true);
     } catch (err) {
-      var m = '$err'.replaceFirst('Exception: ', '');
+      debugPrint('Casella non aggiunta: $err');
+      var m = err is AccessoNegato ? err.messaggio : motivoErrore(err);
       if (['gmail', 'yahoo', 'icloud'].contains(_fornitore.chiave)) {
         m += '\nServe la password per le app, non quella con cui entri nel sito.';
       }
