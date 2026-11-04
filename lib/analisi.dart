@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'archivio.dart';
 import 'credenziali.dart';
 import 'posta.dart';
+import 'kit_tk.dart';
 
 class Analisi extends ChangeNotifier {
   Analisi._();
@@ -41,7 +42,7 @@ class Analisi extends ChangeNotifier {
       notifyListeners();
       try {
         final segreto = await leggiSegreto(c.email);
-        if (segreto == null) throw Exception('credenziali non trovate: togli la casella e aggiungila di nuovo');
+        if (segreto == null) throw 'credenziali non trovate: togli la casella e aggiungila di nuovo';
         final client = await collega(c.host, c.port, c.email, segreto, oauth: c.auth == 'oauth_ms');
         try {
           ultimeNuove += await analizza(client, archivio, c.id, avanzamento: (t, f) {
@@ -62,7 +63,7 @@ class Analisi extends ChangeNotifier {
         await archivio.segnaAnalisi(c.id, c.ultimaAnalisi, 'accesso rifiutato: $e');
         errori.add('${c.email}: accesso rifiutato: $e');
       } catch (e) {
-        final m = '$e'.replaceFirst('Exception: ', '');
+        final m = fraseErrore('Analisi non riuscita.', e);
         await archivio.segnaAnalisi(c.id, c.ultimaAnalisi, m);
         errori.add('${c.email}: $m');
       }
